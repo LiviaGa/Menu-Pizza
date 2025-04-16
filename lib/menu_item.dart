@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pizza_menu/pizza_data.dart';
 
 class MenuCard extends StatelessWidget {
-  const MenuCard({super.key});
+final Pizza pizza;
+  const MenuCard({super.key, required this.pizza});
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +15,15 @@ class MenuCard extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: Row(
                   children: [
-                    Image.asset(
-                      "images/salamino.jpg",
-                      width: 100,
-                      height: 100,
+                    ColorFiltered(
+                      colorFilter: pizza.soldOut ?
+                      ColorFilter.mode(Colors.grey, BlendMode.saturation): 
+                      ColorFilter.mode(Colors.transparent, BlendMode.saturation),
+                      child: Image.asset(
+                        "images/${pizza.photoName}",
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
                     SizedBox(width: 16,),
                     Expanded(
@@ -22,20 +31,20 @@ class MenuCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Pizza Salamino',
+                            '${pizza.name}',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            'Tomato, Mozarella & Pepperoni',
+                            '${pizza.ingredients}',
                             style: TextStyle(
                               fontSize: 16, 
                               color: Colors.black87),
                           ),
                           Text(
-                            'sold out',
+                          pizza.soldOut ? "sould out" : '\$${pizza.price}',
                             style: TextStyle(
                               fontSize: 16, 
                               color: Colors.black54),
